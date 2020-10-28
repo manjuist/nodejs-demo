@@ -1,12 +1,10 @@
-'use strict'
-
 const http = require('http');
 const path = require('path');
 const mime = require('mime');
 const jwt = require('jsonwebtoken');
 
-//const js2json = require('./js2json');
-//const test = require('../src/test.json');
+// const js2json = require('./js2json');
+// const test = require('../src/test.json');
 
 const methodMap = require('./methodMap');
 
@@ -16,31 +14,41 @@ const token = jwt.sign({
 },'a')
 /* eslint-enable */
 
-function getFileName(reqUrl){
+function getFileName(reqUrl) {
   const URLObj = path.parse(reqUrl);
   const { base } = URLObj;
   if (base) {
-    return base
+    return base;
   }
-  return '/'
+  return '/';
 }
 
-http.createServer(function(req, res) {
+http.createServer((req, res) => {
   const {
     method,
     url: reqUrl,
-    headers: {host}
+    headers,
+    headers: { host },
   } = req;
+  console.log(headers);
   const fn = methodMap[method];
-  res.writeHead(200, {'Content-Type': mime.getType(reqUrl) || 'text/html; charset=utf-8'});
-  //res.writeHead(301, {'location': 'http://www.baidu.com'});
+  res.setHeader('Set-Cookie', [
+    'laotie=ai;httponly;samesite=lax',
+    'wtf=hehe',
+    'ai=hehe;httponly',
+    'qie=3;samesite=lax',
+    'jiujiu=3;secure;samesite=none',
+    'baba=3;samesite=none',
+  ]);
+  res.writeHead(200, { 'Content-Type': `${mime.getType(reqUrl)};charset=utf-8` });
+  // res.writeHead(301, {'location': 'http://www.baidu.com'});
 
   fn(getFileName(reqUrl, host))
-    .then(result=>{
-     res.end(result)
+    .then((result) => {
+      res.end(result);
     // res.end(js2json()(res))
-    })
+    });
 })
-  .listen(4000, '127.0.0.1')
+  .listen(4000, '127.0.0.1');
 
-console.log('server running. port 4000')
+console.log('server running. port 4000');
