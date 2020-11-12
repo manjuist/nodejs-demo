@@ -11,6 +11,11 @@ const bodyparser = require('koa-bodyparser');
 const logger = require('koa-logger');
 const mysql = require('mysql');
 const router = require('koa-router')();
+const open = require('open');
+const yargs = require('yargs');
+const configstore = require('configstore');
+const enquirer = require('enquirer');
+
 router
   .get('/le', async (ctx)=>{
   })
