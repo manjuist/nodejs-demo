@@ -4,10 +4,12 @@
   "description": "",
   "main": "web.js",
   "scripts": {
-    "server": "nodemon ./server",
+    "server": "nodemon ./server1.js",
+    "server2": "nodemon ./server2.js",
     "wss": "nodemon ./server/wss",
     "ts": "tsc",
-    "test": "ts-node src/test.ts"
+    "test": "ts-node src/test.ts",
+    "all": "npm run server && npm run wss"
   },
   "repository": {
     "type": "git",

@@ -23,6 +23,7 @@ function getFileName(reqUrl) {
   return '/';
 }
 
+module.exports=function(port){
 http.createServer((req, res) => {
   const {
     method,
@@ -40,6 +41,7 @@ http.createServer((req, res) => {
     'jiujiu=3;secure;samesite=none',
     'baba=3;samesite=none',
   ]);
+    res.setHeader('Access-Control-Allow-Origin','*')
   res.writeHead(200, { 'Content-Type': `${mime.getType(reqUrl)};charset=utf-8` });
   // res.writeHead(301, {'location': 'http://www.baidu.com'});
 
@@ -49,6 +51,7 @@ http.createServer((req, res) => {
     // res.end(js2json()(res))
     });
 })
-  .listen(4000, '127.0.0.1');
+  .listen(port, '127.0.0.1');
 
-console.log('server running. port 4000');
+console.log(`server running. port ${port}`);
+}
